@@ -1,0 +1,8 @@
+Changes from 1.1.0 to 1.2.0 (2026-11-09)
+
+- Added: Numbered stops, a route line and a panel of the points on the map: map.tpl takes map_numbered, map_route and
+  map_panel. In the panel a click (or Enter) on an item flies the map to its point and opens its box; a click on a
+  marker marks its item. A point may bring its own markup ('html') for the panel and the box, and an element with
+  data-bcgmaps-distance next to the map shows the route's length in miles. Works on Google Maps and OpenStreetMap.
+
+Upgrading: composer update and clear the caches.
