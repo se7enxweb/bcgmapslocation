@@ -41,7 +41,7 @@ class BCGMapsLocationType extends eZDataType
     */
     function __construct()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, 
+        parent::__construct( self::DATA_TYPE_STRING, 
 			   ezpI18n::tr( 'extension/bcgmapslocation/datatypes',
 			   "GMaps Location", 'Datatype name' ),
                            array( 'serialize_supported' => true ) );
@@ -52,6 +52,8 @@ class BCGMapsLocationType extends eZDataType
     */
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
+        // the class attribute, for every branch below (PHP 8: an undefined variable is an error)
+        $classAttribute = $contentObjectAttribute->contentClassAttribute();
         if ( $http->hasPostVariable( $base . '_data_bcgmapslocation_latitude_' . $contentObjectAttribute->attribute( 'id' ) ) and
              $http->hasPostVariable( $base . '_data_bcgmapslocation_longitude_' . $contentObjectAttribute->attribute( 'id' ) ) )
         {
@@ -136,11 +138,14 @@ class BCGMapsLocationType extends eZDataType
     }
 
     /*!
-     Returns ...
+     A location when both coordinates are set (an empty attribute has "" or decodes to 0, 0).
     */
     function hasObjectAttributeContent( $contentObjectAttribute )
     {
-        return true;
+        $location = $contentObjectAttribute->content();
+        return $location instanceof BCGMapsLocation
+            && (string)$location->attribute( 'latitude' ) !== '' && (string)$location->attribute( 'longitude' ) !== ''
+            && !( (float)$location->attribute( 'latitude' ) == 0.0 && (float)$location->attribute( 'longitude' ) == 0.0 );
     }
 
     /*!
@@ -194,12 +199,54 @@ class BCGMapsLocationType extends eZDataType
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
         $locationNode = $attributeNode->getElementsByTagName( 'bcgmapslocation' )->item( 0 );
-        eZDebug::writeDebug( $locationNode->ownerDocument->saveXML( $locationNode ) );
 
+        // a package without a location has no node: nothing to set (reading it first failed on PHP 8)
         if ( $locationNode )
         {
             $objectAttribute->setAttribute( 'data_text', $locationNode->ownerDocument->saveXML( $locationNode ) );
         }
+    }
+
+    /*!
+     The location as text, "latitude|longitude" (for imports, packages and scripts); "" when there is none.
+    */
+    function toString( $contentObjectAttribute )
+    {
+        if ( !$this->hasObjectAttributeContent( $contentObjectAttribute ) )
+            return '';
+        $location = $contentObjectAttribute->content();
+        return $location->attribute( 'latitude' ) . '|' . $location->attribute( 'longitude' );
+    }
+
+    /*!
+     Sets the location from "latitude|longitude"; an empty string clears it. Numbers only, in range.
+    */
+    function fromString( $contentObjectAttribute, $string )
+    {
+        $string = trim( (string)$string );
+        if ( $string === '' )
+        {
+            $location = new BCGMapsLocation( '', '' );
+        }
+        else
+        {
+            $parts = array_map( 'trim', explode( '|', $string ) );
+            if ( count( $parts ) < 2 || !is_numeric( $parts[0] ) || !is_numeric( $parts[1] ) ||
+                 abs( (float)$parts[0] ) > 90 || abs( (float)$parts[1] ) > 180 )
+                return false;
+            $location = new BCGMapsLocation( (float)$parts[0], (float)$parts[1] );
+        }
+        $contentObjectAttribute->setContent( $location );
+        $contentObjectAttribute->setAttribute( 'data_text', $location->xmlString() );
+        return true;
+    }
+
+    /*!
+     Not searchable text.
+    */
+    function isIndexable()
+    {
+        return false;
     }
 }
 

@@ -1,4 +1,4 @@
-<? /* #?ini charset="utf-8"?
+<?php /* #?ini charset="utf-8"?
 
 # Names of system functions that are callable through wrap_php_func
 [PHPFunctions]
