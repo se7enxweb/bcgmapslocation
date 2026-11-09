@@ -1,6 +1,14 @@
-/* bcgmapslocation 1.1: the map of many points (design:bcgmapslocation/map.tpl). Sites restyle it freely; these are
-   only the defaults: a map of a usable height, and the list of points hidden once the map shows them. */
+/* bcgmapslocation 1.2: the map of many points (design:bcgmapslocation/map.tpl). Sites restyle it freely; these are
+   only the defaults: a map of a usable height, the list of points hidden once the map shows them (unless it is the
+   map's panel), the panel beside the map on wide screens, and the numbered pins. */
 .bcgmaps-canvas { width: 100%; height: 420px; }
-.bcgmaps.bcgmaps-ready .bcgmaps-points { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.bcgmaps.bcgmaps-ready:not([data-panel="1"]) .bcgmaps-points { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .bcgmaps-points .bcgmaps-text { display: block; }
 .bcgmaps.bcgmaps-failed .bcgmaps-canvas { display: none; }
+.bcgmaps[data-panel="1"] { display: grid; gap: 12px; }
+@media (min-width: 900px) { .bcgmaps[data-panel="1"] { grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); align-items: stretch; } }
+.bcgmaps[data-panel="1"] .bcgmaps-points { margin: 0; padding: 0; list-style: none; overflow-y: auto; max-height: 420px; }
+.bcgmaps[data-panel="1"] .bcgmaps-points li { cursor: pointer; }
+.bcgmaps-pin { display: grid; place-items: center; border-radius: 50%; background: #2b8a3e; color: #fff; font: 700 12px/1 sans-serif; box-shadow: 0 0 0 2px #fff, 0 2px 6px rgb(0 0 0 / .35); }
+.bcgmaps-pin-highlight { background: #7c3aed; font-size: 14px; }
+.bcgmaps-route { stroke: #2b8a3e; stroke-opacity: .8; }
