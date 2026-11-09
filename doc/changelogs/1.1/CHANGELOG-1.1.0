@@ -1,0 +1,16 @@
+Changes from 1.0.0 to 1.1.0 (2026-11-09)
+
+- Added: A map of many points, design:bcgmapslocation/map.tpl with javascript/bcgmapslocation-map.js and
+  stylesheets/bcgmapslocation-map.css. The points are a plain list (readable without JavaScript); the script shows
+  them on Google Maps when [GMapsLocationSettings] GMapsKey is set, else on OpenStreetMap through Leaflet
+  (bcgmapslocation.ini [MapSettings]). One point can be highlighted: a bigger marker with its info box open from the
+  start. A map can open on a given center and zoom (for example a whole country) or fit every point.
+- Added: The datatype converts to and from text, "latitude|longitude" (fromString, toString), so locations can be
+  filled by scripts and imports; it reports content only when both coordinates are set.
+- Updated: Runs on PHP 8: the datatype calls parent::__construct, validation no longer reads an undefined variable,
+  and unserializing a package without a location no longer fails.
+- Updated: Every settings file opens with <?php and uses Unix line endings.
+- Updated: ezinfo.php and extension.xml state version 1.1.0, the license and the repository; composer requires PHP 7.4
+  or newer.
+
+Upgrading: composer update and clear the caches.

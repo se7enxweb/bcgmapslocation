@@ -2,9 +2,9 @@
 <software>
     <metadata>
         <name>BC GMaps Location</name>
-        <version>1.0.1</version>
-        <copyright>Copyright (C) 1999 - 2017 Brookins Consulting and eZ Systems AS</copyright>
-        <license>GNU General Public License</license>
-        <info_url>https://github.com/brookinsconsulting/bcgmapslocation</info_url>
+        <version>1.1.0</version>
+        <copyright>Copyright (C) 1999 - 2026 Brookins Consulting and 7x</copyright>
+        <license>GNU General Public License v2.0 (or any later version)</license>
+        <info_url>https://github.com/se7enxweb/bcgmapslocation</info_url>
     </metadata>
 </software>

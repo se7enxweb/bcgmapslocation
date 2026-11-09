@@ -1,16 +1,19 @@
 <?php
+/**
+ * bcgmapslocation: about this extension (the administration's about page).
+ *
+ * @license GNU General Public License v2.0 (or any later version)
+ */
 class bcgmapslocationInfo
 {
-    function info( )
+    static function info()
     {
-	$BCCurrentYearString = date('Y');
         return array(
-	    'Name' => "<a href='http://projects.ez.no/bcgmapslocation'>BC GMaps Location</a>",
-            'Version' => '1.0.0',
-            'Copyright' => "Copyright (C) 2008 - $BCCurrentYearString <a href='http://brookinsconsulting.com/'>Brookins Consulting</a>",
-            'License' => "GNU General Public License v2.0 (or later)",
-            'Author' => "Brookins Consulting"
-	    );
+            'Name' => 'BC GMaps Location',
+            'Version' => "1.1.0",
+            'Copyright' => 'Copyright (C) 2008 - ' . date( 'Y' ) . ' Brookins Consulting and 7x',
+            'License' => 'GNU General Public License v2.0 (or any later version)',
+            'Info_url' => 'https://github.com/se7enxweb/bcgmapslocation'
+        );
     }
 }
-?>
