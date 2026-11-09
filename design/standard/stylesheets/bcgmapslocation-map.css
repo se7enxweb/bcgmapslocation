@@ -1,0 +1,6 @@
+/* bcgmapslocation 1.1: the map of many points (design:bcgmapslocation/map.tpl). Sites restyle it freely; these are
+   only the defaults: a map of a usable height, and the list of points hidden once the map shows them. */
+.bcgmaps-canvas { width: 100%; height: 420px; }
+.bcgmaps.bcgmaps-ready .bcgmaps-points { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.bcgmaps-points .bcgmaps-text { display: block; }
+.bcgmaps.bcgmaps-failed .bcgmaps-canvas { display: none; }

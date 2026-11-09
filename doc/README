@@ -37,3 +37,18 @@ CREDITS
 The Google Maps eZ Publish datatype and alternate Google Maps usage examples originally
 based on the reliable gmaplocation datatype extension from Blend Interactive's Joe Kepley.
 
+
+
+A MAP OF MANY POINTS (1.1)
+==========================
+
+design:bcgmapslocation/map.tpl shows a list of points on one map: Google Maps when GMapsKey is set, else
+OpenStreetMap (Leaflet). Settings: bcgmapslocation.ini [MapSettings].
+
+  {include uri='design:bcgmapslocation/map.tpl'
+           map_points=array( hash( 'lat', 33.89, 'lng', -117.86, 'title', 'Placentia, CA', 'url', '/tour/placentia',
+                                   'text', 'Saturday, May 2', 'highlight', true() ) )
+           map_center=hash( 'lat', 39.5, 'lng', -98.35 ) map_zoom=4 map_label='Tour map'}
+
+A highlighted point gets a bigger marker and its info box open from the start. Without map_center the map fits every
+point. Fill a location by script with fromString( 'latitude|longitude' ).
