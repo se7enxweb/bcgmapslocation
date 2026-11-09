@@ -30,14 +30,15 @@ MatchFile=location.tpl
 Subdir=templates
 Match[class_identifier]=location
 
-[location_gmaps_include]
-# Source=full/folder.tpl
-Source=node/view/full.tpl
-MatchFile=location_gmaps.tpl
-Subdir=templates
-# Match[class_identifier]=topic_page_top_menu
-# Match[class_identifier]=folder
-Match[object]=164
+# The original demo site showed its map page through object 164 ([location_gmaps_include], location_gmaps.tpl).
+# Object 164 is an unrelated page on any other site, and the template is only in the admin design, so the rule
+# logged "path 'location_gmaps.tpl' not found" on every front page. Point a page of your own at it like this,
+# in your own siteaccess override.ini:
+#[location_gmaps_include]
+#Source=node/view/full.tpl
+#MatchFile=location_gmaps.tpl
+#Subdir=templates
+#Match[object]=<your map page's object id>
 
 #[locations_full]
 #Source=node/view/full.tpl
