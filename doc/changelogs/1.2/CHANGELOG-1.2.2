@@ -1,0 +1,9 @@
+Changes from 1.2.1 to 1.2.2 (2026-11-10)
+
+- Updated: The OpenStreetMap map loads Leaflet from your own server. Leaflet 1.9.4 (BSD 2-Clause, its LICENSE
+  alongside) now ships in design/standard/lib/leaflet-1.9.4/, and map.tpl hands its address to the map script, so a
+  map page calls no outside server but the tile server; before, the script and stylesheet came from unpkg.com.
+  The new setting bcgmapslocation.ini [MapSettings] LeafletSource=cdn brings back the old behavior. The folder name
+  carries the version, so a later Leaflet never needs a version query on its links.
+
+Upgrading: composer update and clear the caches (ini and templates).
