@@ -23,9 +23,13 @@
      $bm_provider = ezini( 'MapSettings', 'Provider', 'bcgmapslocation.ini' )
      $bm_points = cond( is_set( $map_points ), $map_points, array() )}
 {if $bm_provider|eq( 'auto' )}{set $bm_provider = cond( $bm_ini_key|ne( '' ), 'google', 'osm' )}{/if}
+{* Leaflet from the copy this extension ships (design/standard/lib/leaflet-<LeafletVersion>/), unless LeafletSource=cdn:
+   its folder, found through the design like any other file (the address of leaflet.js less the file name) *}
+{def $bm_leaflet_base = ''}
+{if and( $bm_provider|ne( 'google' ), ezini( 'MapSettings', 'LeafletSource', 'bcgmapslocation.ini' )|ne( 'cdn' ) )}{set $bm_leaflet_base = concat( 'lib/leaflet-', ezini( 'MapSettings', 'LeafletVersion', 'bcgmapslocation.ini' ), '/leaflet.js' )|ezdesign( 'no' )}{set $bm_leaflet_base = $bm_leaflet_base|extract_left( sub( $bm_leaflet_base|count_chars, 10 ) )}{/if}
 {if and( $bm_provider|eq( 'google' ), $bm_ini_key|eq( '' ) )}{set $bm_provider = 'osm'}{/if}
 <div class="bcgmaps{if is_set( $map_class )} {$map_class|wash}{/if}" data-bcgmaps="1" data-provider="{$bm_provider|wash}"{if and( is_set( $map_numbered ), $map_numbered )} data-numbered="1"{/if}{if and( is_set( $map_route ), $map_route )} data-route="1"{/if}{if and( is_set( $map_panel ), $map_panel )} data-panel="1"{/if}
-     {if $bm_provider|eq( 'google' )}data-key="{$bm_ini_key|wash}" data-map-id="{ezini( 'MapSettings', 'GoogleMapId', 'bcgmapslocation.ini' )|wash}"{else}data-tiles="{ezini( 'MapSettings', 'TileURL', 'bcgmapslocation.ini' )|wash}" data-attribution="{ezini( 'MapSettings', 'TileAttribution', 'bcgmapslocation.ini' )|wash}" data-leaflet="{ezini( 'MapSettings', 'LeafletVersion', 'bcgmapslocation.ini' )|wash}"{/if}
+     {if $bm_provider|eq( 'google' )}data-key="{$bm_ini_key|wash}" data-map-id="{ezini( 'MapSettings', 'GoogleMapId', 'bcgmapslocation.ini' )|wash}"{else}data-tiles="{ezini( 'MapSettings', 'TileURL', 'bcgmapslocation.ini' )|wash}" data-attribution="{ezini( 'MapSettings', 'TileAttribution', 'bcgmapslocation.ini' )|wash}" data-leaflet="{ezini( 'MapSettings', 'LeafletVersion', 'bcgmapslocation.ini' )|wash}"{if $bm_leaflet_base} data-leaflet-base="{$bm_leaflet_base|wash}"{/if}{/if}
      {if and( is_set( $map_center ), is_set( $map_center.lat ), is_set( $map_center.lng ) )}data-center-lat="{$map_center.lat|wash}" data-center-lng="{$map_center.lng|wash}" data-zoom="{cond( is_set( $map_zoom ), $map_zoom, 4 )|wash}"{if is_set( $map_zoom_small )} data-zoom-small="{$map_zoom_small|wash}"{/if}{/if}>
     <div class="bcgmaps-canvas" role="region" aria-label="{cond( is_set( $map_label ), $map_label, 'Map' )|wash}"></div>
     <ul class="bcgmaps-points">
@@ -40,4 +44,4 @@
 <link rel="stylesheet" href={'stylesheets/bcgmapslocation-map.css'|ezdesign}>
 <script src={'javascript/bcgmapslocation-map.js'|ezdesign} defer></script>
 {/run-once}
-{undef $bm_ini_key $bm_provider $bm_points}
+{undef $bm_ini_key $bm_provider $bm_points $bm_leaflet_base}

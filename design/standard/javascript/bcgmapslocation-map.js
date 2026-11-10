@@ -102,7 +102,9 @@
     }
 
     function leaflet(el, canvas, pts) {
-        var base = 'https://unpkg.com/leaflet@' + (el.getAttribute('data-leaflet') || '1.9.4') + '/dist/';
+        // the copy of Leaflet the extension ships (data-leaflet-base, bcgmapslocation.ini [MapSettings] LeafletSource=local),
+        // else the public CDN (LeafletSource=cdn)
+        var base = el.getAttribute('data-leaflet-base') || ('https://unpkg.com/leaflet@' + (el.getAttribute('data-leaflet') || '1.9.4') + '/dist/');
         stylesheet(base + 'leaflet.css');
         return script(base + 'leaflet.js').then(function () {
             var L = window.L, c = center(el), first = null, markers = [];

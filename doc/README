@@ -45,6 +45,10 @@ A MAP OF MANY POINTS (1.1)
 design:bcgmapslocation/map.tpl shows a list of points on one map: Google Maps when GMapsKey is set, else
 OpenStreetMap (Leaflet). Settings: bcgmapslocation.ini [MapSettings].
 
+Leaflet 1.9.4 ships with the extension (design/standard/lib/leaflet-1.9.4/, BSD 2-Clause, its LICENSE next to it)
+and is served from your own server, so an OpenStreetMap page calls no outside server but the tile server. Set
+[MapSettings] LeafletSource=cdn to load it from unpkg.com instead (1.2.2).
+
   {include uri='design:bcgmapslocation/map.tpl'
            map_points=array( hash( 'lat', 33.89, 'lng', -117.86, 'title', 'Placentia, CA', 'url', '/tour/placentia',
                                    'text', 'Saturday, May 2', 'highlight', true() ) )

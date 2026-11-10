@@ -37,6 +37,9 @@ Provider=auto
 # Google Maps: a Map ID (Google Cloud console) shows the current Advanced Markers; without one the classic markers.
 GoogleMapId=
 # OpenStreetMap through Leaflet: the tile address and the attribution its tile policy requires.
+# LeafletSource: local (default) loads the copy of Leaflet this extension ships, design/standard/lib/leaflet-<LeafletVersion>/,
+# from your own server, so a map page calls no outside server but the tile server; cdn loads it from unpkg.com instead.
+LeafletSource=local
 LeafletVersion=1.9.4
 TileURL=https://tile.openstreetmap.org/{z}/{x}/{y}.png
 TileAttribution=&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors
